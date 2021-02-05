@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.am-navbar .am-navbar-title {
+    font-size: 1.75rem;
+    color: #ffffff;
+    -webkit-text-stroke: 2px #151515;
+    text-shadow: 0 0 15px #ffffff, 0 0 15px #ffffff, 0 0 15px #ffffff, 0 0 15px #ffffff;
+    font-weight: bold;
+}
+
+.am-navbar svg, .am-list-item {
+    cursor: pointer;
+}
+
+.am-list-item .am-input-label.am-input-label-5 {
+    width: 50%;
+}
+
+.gain {
+    color: #33d033;
+}
+.lose {
+    color: #d03333;
+}
