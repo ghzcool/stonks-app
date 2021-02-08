@@ -39,7 +39,7 @@ function StockList({ onPageChange }) {
                 <div className={'pull-right ' + (dif > 0 ? 'gain' : 'lose')}>
                   {dif > 0 ? '+' : ''}{dif.toFixed(2)} {price.currency}
                 </div>
-                <div className={dif > 0 ? 'gain' : 'lose'}>
+                <div className={difOne > 0 ? 'gain' : 'lose'}>
                   {difOne > 0 ? '+' : ''}{difOne.toFixed(2)} {price.currency} {difOne > 0 ? '+' : ''}{(100 * difOne / (+item.buyPrice || 1)).toFixed(2)}%
                 </div>
               </Card.Body>
