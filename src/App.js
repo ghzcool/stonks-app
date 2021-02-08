@@ -11,14 +11,7 @@ function App() {
     getPrices();
     getCurrencyRates();
   }, [true]);
-  // const prices = usePrices();
-  // const currency = useCurrencyRates();
 
-  /*let price = 150;
-  let priceEur;
-  if(currency) {
-    priceEur = convertCurrency(price, 'USD', 'EUR');
-  }*/
   const [page, setPage] = useState('StockList');
   const [pageProps, setPageProps] = useState({});
 

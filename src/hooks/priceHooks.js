@@ -17,23 +17,29 @@ export const usePrices = hookFromSubject(pricesSubject);
 export const getPrices = () => {
   const stocks = stocksSubject.getValue();
   if (stocks.length) {
-    return fetch(new Request('/api/prices/' + stocks.map(item => item.symbol).join(','))).then(async (response) => {
-      try {
-        const prices = await response.json();
-        pricesSubject.next(prices);
-        localStorage.setItem('prices', JSON.stringify(prices));
-      } catch (e) {
-        console.error(e);
-      }
-    }).catch(console.error);
+    const symbols = {};
+    stocks.forEach(item => {
+      symbols[item.symbol] = true;
+    });
+    return fetch(new Request('/api/prices/' + Object.keys(symbols).join(',') + '?t=' + new Date().getTime()))
+      .then(async (response) => {
+        try {
+          const prices = await response.json();
+          pricesSubject.next(prices);
+          localStorage.setItem('prices', JSON.stringify(prices));
+        } catch (e) {
+          console.error(e);
+        }
+      }).catch(console.error);
   }
 };
 
-export const priceSubject = new BehaviorSubject({ currency: DEFAULT_CURRENCY });
+export const priceSubject = new BehaviorSubject(null);
 export const usePrice = hookFromSubject(priceSubject);
 export const getPrice = (symbol) => {
   if (symbol) {
-    return fetch(new Request('/api/prices/' + symbol)).then(async (response) => {
+    priceSubject.next(null);
+    return fetch(new Request('/api/prices/' + symbol + '?t=' + new Date().getTime())).then(async (response) => {
       try {
         const prices = await response.json();
         priceSubject.next(prices[symbol]);

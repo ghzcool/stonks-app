@@ -2,6 +2,7 @@ import React from "react";
 import { Button, InputItem, List, Toast } from "antd-mobile";
 import { createForm } from 'rc-form';
 import { getPrice, usePrice } from "../hooks/priceHooks";
+import { DEFAULT_CURRENCY } from "../constants";
 
 function StockForm(props) {
 
@@ -13,6 +14,7 @@ function StockForm(props) {
   const onSymbolChange = (symbol) => {
     const uppercase = symbol.toUpperCase();
     form.setFieldsValue({ symbol: uppercase });
+    onSymbolBlur();
   };
 
   const onSymbolBlur = () => {
@@ -31,7 +33,6 @@ function StockForm(props) {
                      ],
                    })}
                    onChange={onSymbolChange}
-                   onBlur={onSymbolBlur}
                    onErrorClick={() => {
                      Toast.info(getFieldError('symbol').join('、'));
                    }}
@@ -55,18 +56,18 @@ function StockForm(props) {
                        { required: true, message: 'Please input buy price' },
                      ],
                    })}
-                   type={'digit'} extra={price.currency}
+                   type={'digit'} extra={(price && price.currency) || DEFAULT_CURRENCY}
                    onErrorClick={() => {
                      Toast.info(getFieldError('buyPrice').join('、'));
                    }}
         >Buy price</InputItem>
         <InputItem placeholder=""
                    {...getFieldProps('transactionFee', { initialValue: values.transactionFee })}
-                   type={'digit'} extra={price.currency}
+                   type={'digit'} extra={(price && price.currency) || DEFAULT_CURRENCY}
         >Transaction fee</InputItem>
         <List.Item
           extra={<Button size="small" inline style={{ marginLeft: '0.25rem' }} onClick={onCancel}>Cancel</Button>}>
-          <Button type="primary" size="small" inline
+          <Button type="primary" size="small" inline disabled={!price || !price.value}
                   onClick={() => form.validateFields((error, value) => {
                     if (!error) {
                       onSubmit(form.getFieldsValue());

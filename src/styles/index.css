@@ -26,6 +26,19 @@ body {
 .gain {
     color: #33d033;
 }
+
 .lose {
     color: #d03333;
+}
+
+.pull-right {
+    float: right;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.am-card-body {
+    min-height: 28px;
 }

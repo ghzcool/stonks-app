@@ -17,7 +17,7 @@ function Menu({ onPageChange }) {
       <List className="my-list">
         <List.Item onClick={() => onPageChange('StockList')}>My stonks</List.Item>
         <List.Item onClick={() => onPageChange('Summary')}>Summary</List.Item>
-        <List.Item onClick={() => onPageChange('Settings')}>Settings</List.Item>
+        {/*<List.Item onClick={() => onPageChange('Settings')}>Settings</List.Item>*/}
       </List>
     </div>
   );
