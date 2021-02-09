@@ -24,7 +24,7 @@ app.get('/api/prices/:symbols', async (req, res) => {
   for(let i = 0; i < symbols.length; i++) {
     const symbol = symbols[i];
     const price = await getSymbolPrice(symbol);
-    prices[symbol] = { value: (price.bid + price.ask) / 2, currency: price.currency };
+    prices[symbol] = { value: price.regularMarketPrice, currency: price.currency };
   }
   res.send(prices);
 } catch(error) {
