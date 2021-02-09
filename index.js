@@ -4,15 +4,40 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.get('/api/prices/:symbols', (req, res) => {
+const expireTime = 1000 * 60 * 60; // 1h
+const symbolPrices = {};
+
+const getSymbolPrice =  async (symbol) => {
+  const now = new Date().getTime();
+  if (!symbolPrices[symbol] || (symbolPrices[symbol].timestamp + expireTime) < now) {
+    const response = await si.getSingleStockInfo(symbol);
+    symbolPrices[symbol] = {value: response, timestamp: now};
+    return response;
+  }
+  return symbolPrices[symbol].value;
+};
+
+app.get('/api/prices/:symbols', async (req, res) => {
   const symbols = req.params.symbols.split(',');
-  si.getStocksInfo(symbols).then(result => {
+  const prices = {};
+  try {
+  for(let i = 0; i < symbols.length; i++) {
+    const symbol = symbols[i];
+    const price = await getSymbolPrice(symbol);
+    prices[symbol] = { value: (price.bid + price.ask) / 2, currency: price.currency };
+  }
+  res.send(prices);
+} catch(error) {
+  console.error(error);
+    res.status(500).send(error)
+}
+  /*si.getStocksInfo(symbols).then(result => {
     const prices = {};
     result.forEach(item => {
       prices[item.symbol] = { value: (item.bid + item.ask) / 2, currency: item.currency };
     });
     res.send(prices);
-  }).catch((error) => res.status(500).send(error));
+  }).catch((error) => res.status(500).send(error));*/
 });
 
 let currencyRates = {
@@ -206,7 +231,7 @@ const updateCurrencyRates = () => {
       console.error(e);
     }
   }).catch(console.error);
-  setTimeout(updateCurrencyRates, 1000 * 60 * 60 * 12);
+  setTimeout(updateCurrencyRates, 1000 * 60 * 60 * 12); // 12h
 };
 
 updateCurrencyRates();
