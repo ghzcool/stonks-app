@@ -97,3 +97,17 @@ export const convertCurrency = (value, currencyFrom, currencyTo) => {
   const valueBase = value / currency.rates[currencyFrom];
   return valueBase * currency.rates[currencyTo];
 };
+
+
+export const calculateTotalGain = (stocks, prices) => {
+  let gainSum = 0;
+  (stocks || []).forEach(item => {
+    if (item && prices && prices[item.symbol]) {
+      const price = prices[item.symbol];
+      const payed = (+item.buyPrice) * (+item.amount) + (+item.transactionFee || 0);
+      const gain = ((+price.value) * (+item.amount) - (+item.transactionFee || 0)) - payed;
+      gainSum += gain;
+    }
+  });
+  return gainSum;
+};

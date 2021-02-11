@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, InputItem, List, Toast } from "antd-mobile";
 import { createForm } from 'rc-form';
-import { getPrice, usePrice } from "../hooks/priceHooks";
+import { getPrice, usePrice, priceSubject } from "../hooks/priceHooks";
 import { DEFAULT_CURRENCY } from "../constants";
 
 function StockForm(props) {
 
   const { values, onSubmit, onCancel, form } = props;
   const { getFieldProps, getFieldError } = form;
+
+  useEffect(() => {
+    if (values && values.symbol) {
+      getPrice(values.symbol).then().catch();
+    } else {
+      priceSubject.next(null);
+    }
+  }, [true]);
 
   const price = usePrice();
 
@@ -37,6 +45,7 @@ function StockForm(props) {
                      Toast.info(getFieldError('symbol').join('、'));
                    }}
         >Symbol</InputItem>
+        <small className={'stock-name-small'}>{price && price.name}</small>
         <InputItem placeholder="required" error={!!getFieldError('amount')}
                    {...getFieldProps('amount', {
                      initialValue: values.amount,

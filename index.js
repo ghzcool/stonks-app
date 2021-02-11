@@ -7,11 +7,11 @@ const port = process.env.PORT || 5000;
 const expireTime = 1000 * 60 * 60; // 1h
 const symbolPrices = {};
 
-const getSymbolPrice =  async (symbol) => {
+const getSymbolPrice = async (symbol) => {
   const now = new Date().getTime();
   if (!symbolPrices[symbol] || (symbolPrices[symbol].timestamp + expireTime) < now) {
     const response = await si.getSingleStockInfo(symbol);
-    symbolPrices[symbol] = {value: response, timestamp: now};
+    symbolPrices[symbol] = { value: response, timestamp: now };
     return response;
   }
   return symbolPrices[symbol].value;
@@ -21,16 +21,21 @@ app.get('/api/prices/:symbols', async (req, res) => {
   const symbols = req.params.symbols.split(',');
   const prices = {};
   try {
-  for(let i = 0; i < symbols.length; i++) {
-    const symbol = symbols[i];
-    const price = await getSymbolPrice(symbol);
-    prices[symbol] = { value: price.regularMarketPrice, currency: price.currency };
-  }
-  res.send(prices);
-} catch(error) {
-  console.error(error);
+    for (let i = 0; i < symbols.length; i++) {
+      const symbol = symbols[i];
+      const price = await getSymbolPrice(symbol);
+      prices[symbol] = {
+        value: price.regularMarketPrice,
+        currency: price.currency,
+        preMarketPrice: price.preMarketPrice,
+        name: price.displayName
+      };
+    }
+    res.send(prices);
+  } catch (error) {
+    console.error(error);
     res.status(500).send(error)
-}
+  }
   /*si.getStocksInfo(symbols).then(result => {
     const prices = {};
     result.forEach(item => {
