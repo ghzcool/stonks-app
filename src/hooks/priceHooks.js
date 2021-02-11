@@ -1,6 +1,5 @@
 import { BehaviorSubject } from "rxjs";
 import { hookFromSubject } from "./index";
-import { DEFAULT_CURRENCY } from "../constants";
 
 let savedPrices = {};
 const savedPricesString = localStorage.getItem('prices');
@@ -105,7 +104,7 @@ export const calculateTotalGain = (stocks, prices) => {
     if (item && prices && prices[item.symbol]) {
       const price = prices[item.symbol];
       const payed = (+item.buyPrice) * (+item.amount) + (+item.transactionFee || 0);
-      const gain = ((+price.value) * (+item.amount) - (+item.transactionFee || 0)) - payed;
+      const gain = ((price.preMarketPrice || +price.value) * (+item.amount) - (+item.transactionFee || 0)) - payed;
       gainSum += gain;
     }
   });

@@ -40,16 +40,16 @@ function StockList({ onPageChange }) {
         <WhiteSpace size="lg"/>
         {!!prices && (stocks || []).map((item, index) => {
           const price = prices[item.symbol] || {};
-          const value = price.value || 0;
+          const value = price.preMarketPrice || price.value || 0;
           const preMarketPrice = price.preMarketPrice || 0;
           const buyPrice = +item.amount * +item.buyPrice + (+item.transactionFee || 0);
-          const sellPrice = +item.amount * +preMarketPrice - (+item.transactionFee || 0);
-          const difOne = +preMarketPrice - +item.buyPrice;
+          const sellPrice = +item.amount * +value - (+item.transactionFee || 0);
+          const difOne = +value - +item.buyPrice;
           const dif = sellPrice - buyPrice;
           return !!prices[item.symbol] && <div key={index}>
             <Card onClick={() => onPageChange('StockDetails', { item, index })}>
               <Card.Header
-                title={<>{item.symbol} {preMarketPrice.toFixed(2)}<span className={'market-price'}>({value.toFixed(2)})</span>{price.currency}</>}
+                title={<>{item.symbol} {!preMarketPrice && value.toFixed(2)} {!!preMarketPrice && <span className={'market-price'}>{value.toFixed(2)}</span>}{price.currency}</>}
                 extra={<span>{item.amount}</span>}
               />
               <Card.Body>
