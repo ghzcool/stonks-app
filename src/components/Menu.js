@@ -8,6 +8,7 @@ function Menu({ onPageChange }) {
     <div className="Menu">
       <NavBar
         mode="dark"
+        className={'top-bar'}
         leftContent={[
           <AiOutlineLeft size={24} key={'menu'} onClick={() => onPageChange('StockList')}/>
         ]}

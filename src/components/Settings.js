@@ -8,6 +8,7 @@ function Settings({ onPageChange }) {
     <div className="Settings">
       <NavBar
         mode="dark"
+        className={'top-bar'}
         leftContent={[
           <AiOutlineHome size={24} key={'menu'} onClick={() => onPageChange('StockList')}/>
         ]}

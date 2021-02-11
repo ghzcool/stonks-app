@@ -36,6 +36,7 @@ function StockDetails({ onPageChange, props }) {
     <div className="StockDetails">
       <NavBar
         mode="dark"
+        className={'top-bar'}
         leftContent={[
           <AiOutlineLeft size={24} key={'menu'} onClick={goBack}/>
         ]}

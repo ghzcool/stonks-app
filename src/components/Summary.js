@@ -18,7 +18,7 @@ function Summary({ onPageChange }) {
       }
       const price = prices[item.symbol];
       const payed = (+item.buyPrice) * (+item.amount) + (+item.transactionFee || 0);
-      const gain = ((+price.value) * (+item.amount) - (+item.transactionFee || 0)) - payed;
+      const gain = ((+price.preMarketPrice) * (+item.amount) - (+item.transactionFee || 0)) - payed;
       payedSum += payed;
       gainSum += gain;
       grouped[item.symbol].payed += payed;
@@ -36,6 +36,7 @@ function Summary({ onPageChange }) {
     <div className="Summary">
       <NavBar
         mode="dark"
+        className={'top-bar'}
         leftContent={[
           <AiOutlineHome size={24} key={'menu'} onClick={() => onPageChange('StockList')}/>
         ]}

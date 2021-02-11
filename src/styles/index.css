@@ -54,13 +54,16 @@ body {
     flex: auto;
 }
 
-.pre-market-price {
+.market-price {
     color: #888;
     margin: 0 4px;
 }
 
-.StockList {
+.StockList, .StockDetails, .Summary, .Settings, .Menu {
     padding-top: 45px;
+}
+
+.StockList {
     padding-bottom: 45px;
 }
 
@@ -69,7 +72,7 @@ body {
     left: 0;
     right: 0;
     top: 0;
-    z-index: 1;
+    z-index: 10;
     box-shadow: 0 -4px 16px #000000;
 }
 
@@ -78,6 +81,6 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 1;
+    z-index: 10;
     box-shadow: 0 12px 16px #000000;
 }
