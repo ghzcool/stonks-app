@@ -104,7 +104,7 @@ export const calculateTotalGain = (stocks, prices) => {
     if (item && prices && prices[item.symbol]) {
       const price = prices[item.symbol];
       const payed = (+item.buyPrice) * (+item.amount) + (+item.transactionFee || 0);
-      const gain = ((price.preMarketPrice || +price.value) * (+item.amount) - (+item.transactionFee || 0)) - payed;
+      const gain = ((price.preMarketPrice || price.postMarketPrice || +price.value) * (+item.amount) - (+item.transactionFee || 0)) - payed;
       gainSum += gain;
     }
   });

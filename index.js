@@ -28,7 +28,8 @@ app.get('/api/prices/:symbols', async (req, res) => {
         value: price.regularMarketPrice,
         currency: price.currency,
         preMarketPrice: price.preMarketPrice,
-        name: price.displayName
+        postMarketPrice: price.postMarketPrice,
+        name: price.displayName || price.shortName || price.longName
       };
     }
     res.send(prices);

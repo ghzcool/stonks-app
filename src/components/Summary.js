@@ -18,7 +18,7 @@ function Summary({ onPageChange }) {
       }
       const price = prices[item.symbol];
       const payed = (+item.buyPrice) * (+item.amount) + (+item.transactionFee || 0);
-      const gain = ((price.preMarketPrice || +price.value) * (+item.amount) - (+item.transactionFee || 0)) - payed;
+      const gain = ((price.preMarketPrice || price.postMarketPrice || +price.value) * (+item.amount) - (+item.transactionFee || 0)) - payed;
       payedSum += payed;
       gainSum += gain;
       grouped[item.symbol].payed += payed;

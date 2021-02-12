@@ -39,6 +39,10 @@ body {
     text-align: right;
 }
 
+.text-gray {
+    color: #666666;
+}
+
 .am-card-body {
     min-height: 28px;
 }
