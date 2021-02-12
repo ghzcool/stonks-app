@@ -24,15 +24,6 @@ function StockList({ onPageChange }) {
   const timeToClose = closeMoment.diff(now, 'hour');
   const timeToCloseM = closeMoment.diff(now, 'minute');
 
-  console.log({
-    nextIsOpen,
-    timeToOpen,
-    timeToClose,
-    now: now.format('HH:mm:ssZ'),
-    openMoment: openMoment.format('HH:mm:ssZ'),
-    closeMoment: closeMoment.format('HH:mm:ssZ')
-  });
-
   return (
     <div className="StockList">
       <NavBar key={'top'}
