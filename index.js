@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
 
-const expireTime = 1000 * 60 * 15; // 15m
+const expireTime = 1000 * 60; // 1m
 const symbolPrices = {};
 
 const getSymbolPrice = async (symbol) => {

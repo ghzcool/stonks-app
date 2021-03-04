@@ -18,7 +18,8 @@ function StockList({ onPageChange }) {
   const now = moment();
   const openMoment = moment.tz(now.format('YYYY-MM-DD') + 'T' + openTime, 'America/New_York');
   const closeMoment = moment.tz(now.format('YYYY-MM-DD') + 'T' + closeTime, 'America/New_York');
-  let nextIsOpen = now.isSameOrBefore(openMoment);
+  let nextIsOpen = now.isBefore(openMoment);
+  let nextIsClose = now.isBefore(closeMoment);
   const timeToOpen = openMoment.diff(now, 'hour');
   const timeToOpenM = openMoment.diff(now, 'minute');
   const timeToClose = closeMoment.diff(now, 'hour');
@@ -41,10 +42,13 @@ function StockList({ onPageChange }) {
               className={'bottom-bar'}
               leftContent={[
                 nextIsOpen
-                  ? <div key={'open'} className={'text-gray'}>opens
-                    in {timeToOpenM < 60 ? timeToOpenM : timeToOpen}{timeToOpenM < 60 ? 'm' : 'h'}</div>
-                  : <div key={'close'} className={'text-gray'}>closes
-                    in {timeToCloseM < 60 ? timeToCloseM : timeToClose}{timeToCloseM < 60 ? 'm' : 'h'}</div>
+                  ? <div key={'open'} className={'text-gray'}>
+                    opens in {timeToOpen}h {timeToOpenM % 60}m
+                  </div>
+                  : nextIsClose ? <div key={'close'} className={'text-gray'}>
+                    closes in {timeToClose}h {timeToCloseM % 60}m
+                  </div>
+                  : ''
               ]}
               rightContent={[
                 <div key={'gain'} className={'text-right ' + (totalGain > 0 ? 'gain' : 'lose')}>
