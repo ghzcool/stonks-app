@@ -27,7 +27,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "publish": "node index.js",
-    "prod": "build & publish"
+    "prod": "build & publish",
+    "docker-build": "docker rmi -f stonks-app & docker build -t stonks-app .",
+    "docker-run": "docker run --name stonks-app -d -p 5000:5000 stonks-app"
   },
   "eslintConfig": {
     "extends": [
