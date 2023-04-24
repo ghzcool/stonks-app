@@ -1,3 +1,8 @@
-FROM node:16.3.0-alpine
-COPY ./build/ /opt/stonks-app
-RUN node /opt/stonks-app/index.js
+FROM arm64v8/node:14.5.0-alpine
+WORKDIR /opt/stonks-app
+COPY ./build ./build
+COPY ./index.js ./
+COPY ./package*.json ./
+RUN npm ci --only=production
+EXPOSE 5000
+CMD ["sh", "-c", "node index.js"]
