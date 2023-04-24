@@ -10,16 +10,14 @@ const symbolPrices = {};
 const getSymbolPrice = async (symbol) => {
   const now = new Date().getTime();
   if (!symbolPrices[symbol] || (symbolPrices[symbol].timestamp + expireTime) < now) {
-    let response = 0;
+    let response = {};
     try {
       response = await si.getSingleStockInfo(symbol);
-      if ("object" !== typeof response) {
-        symbolPrices[symbol] = { value: response, timestamp: now };
-      }
+      symbolPrices[symbol] = { value: response, timestamp: now };
     } catch (error) {
       console.error(error);
     }
-    return +response;
+    return response;
   }
   return symbolPrices[symbol].value;
 };
@@ -44,13 +42,6 @@ app.get('/api/prices/:symbols', async (req, res) => {
     console.error(error);
     res.status(500).send(error)
   }
-  /*si.getStocksInfo(symbols).then(result => {
-    const prices = {};
-    result.forEach(item => {
-      prices[item.symbol] = { value: (item.bid + item.ask) / 2, currency: item.currency };
-    });
-    res.send(prices);
-  }).catch((error) => res.status(500).send(error));*/
 });
 
 let currencyRates = {

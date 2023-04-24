@@ -1,6 +1,6 @@
 {
   "name": "stonks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "main": "index.js",
   "dependencies": {
@@ -16,7 +16,7 @@
     "rc-form": "^2.4.12",
     "rxjs": "^6.6.3",
     "express": "^4.17.1",
-    "stock-info": "^1.2.0",
+    "stock-info": "^1.6.2",
     "node-fetch": "^2.6.1",
     "moment-timezone": "^0.5.33"
   },
