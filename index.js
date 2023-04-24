@@ -10,9 +10,16 @@ const symbolPrices = {};
 const getSymbolPrice = async (symbol) => {
   const now = new Date().getTime();
   if (!symbolPrices[symbol] || (symbolPrices[symbol].timestamp + expireTime) < now) {
-    const response = await si.getSingleStockInfo(symbol);
-    symbolPrices[symbol] = { value: response, timestamp: now };
-    return response;
+    let response = 0;
+    try {
+      response = await si.getSingleStockInfo(symbol);
+      if ("object" !== typeof response) {
+        symbolPrices[symbol] = { value: response, timestamp: now };
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    return +response;
   }
   return symbolPrices[symbol].value;
 };
